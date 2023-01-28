@@ -24,6 +24,7 @@ public class UserInterface {
 
         FileDatabase database = new FileDatabase();
         boolean mainExit, modifyExit;
+        String fName, msg;
 
         while (true){
             mainExit = false;
@@ -40,13 +41,23 @@ public class UserInterface {
                         int modifyChoice = sc.nextInt();
                         switch (modifyChoice) {
                             case 1:
-                                database.addFile();
+                                System.out.println("Enter file name to add:");
+                                fName = sc.next();
+                                Files f = new Files(fName);
+                                msg = database.addFile(f);
+                                System.out.println(msg);
                                 break;
                             case 2:
-                                database.deleteFile();
+                                System.out.println("Enter file name to delete:");
+                                fName = sc.next();
+                                msg = database.deleteFile(fName);
+                                System.out.println(msg);
                                 break;
                             case 3:
-                                database.searchFile();
+                                System.out.println("Enter file name to search:");
+                                fName = sc.next();
+                                msg = database.searchFile(fName);
+                                System.out.println(msg);
                                 break;
                             case 4:
                                 modifyExit = true;
