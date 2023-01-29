@@ -45,5 +45,13 @@ public class FileDatabase {
         }
         return "File \""+fName+"\" not found";
     }
+    public boolean onlyWhiteSpaces(String fName){
+        if(fName.trim().isEmpty()) {
+            System.out.println("The file name cannot contain only whitespaces!");
+            return true;
+        }
+        else
+            return false;
+    }
 
 }

@@ -20,29 +20,40 @@ public class UserInterface {
         System.out.println("WELCOME at LockedMe.com");
         System.out.println("(developed by Michaela Tomanova)\n");
 
-        Scanner sc = new Scanner(System.in);
-
         FileDatabase database = new FileDatabase();
         boolean mainExit, modifyExit;
         String fName, msg;
+        int choice;
 
         while (true){
             mainExit = false;
+            Scanner sc = new Scanner(System.in);
             displayMainMenu();
-            int mainChoice = sc.nextInt();
-            switch (mainChoice){
+            try {
+                choice = sc.nextInt();
+            }catch (Exception e) {
+                choice = 0;
+            }
+            switch (choice){
                 case 1:
                     database.displayFiles();
                     break;
                 case 2:
                     while (true){
                         modifyExit = false;
+                        sc = new Scanner(System.in).useDelimiter("\n");
                         displayModifyMenu();
-                        int modifyChoice = sc.nextInt();
-                        switch (modifyChoice) {
+                        try {
+                            choice = sc.nextInt();
+                        }catch (Exception e) {
+                            choice = 0;
+                        }
+                        switch (choice) {
                             case 1:
                                 System.out.println("Enter file name to add:");
                                 fName = sc.next();
+                                if(database.onlyWhiteSpaces(fName))
+                                    break;
                                 Files f = new Files(fName);
                                 msg = database.addFile(f);
                                 System.out.println(msg);
@@ -50,18 +61,24 @@ public class UserInterface {
                             case 2:
                                 System.out.println("Enter file name to delete:");
                                 fName = sc.next();
+                                if(database.onlyWhiteSpaces(fName))
+                                    break;
                                 msg = database.deleteFile(fName);
                                 System.out.println(msg);
                                 break;
                             case 3:
                                 System.out.println("Enter file name to search:");
                                 fName = sc.next();
+                                if(database.onlyWhiteSpaces(fName))
+                                    break;
                                 msg = database.searchFile(fName);
                                 System.out.println(msg);
                                 break;
                             case 4:
                                 modifyExit = true;
                                 break;
+                            default:
+                                System.out.println("Invalid input -> select 1, 2, 3 or 4");
                         }
                         if(modifyExit)
                             break;
@@ -70,6 +87,8 @@ public class UserInterface {
                 case 3:
                     mainExit = true;
                     break;
+                default:
+                    System.out.println("Invalid input -> select 1, 2 or 3");
             }
             if(mainExit)
                 break;
